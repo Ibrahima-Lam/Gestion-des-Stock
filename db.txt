@@ -1,0 +1,62 @@
+create database gestion stock;
+
+create table categorie (
+    idCategorie tinyint unsigned primary key auto_increment,
+    nomCategorie varchar(50)
+);
+
+create table article(
+    idArticle tinyint unsigned primary key auto_increment,
+    nomArticle varchar(50),
+    prix_vente decimal default 0,
+    description text,
+    idCategorie tinyint unsigned,
+    constraint fk_categorie foreign key(idCategorie) references categorie(idCategorie)
+);
+
+create table fournisseur (
+    idFournisseur tinyint unsigned primary key auto_increment,
+     nomFounisseur varchar(50),
+     adresseFounisseur varchar(50),
+     telFounisseur varchar(12)
+
+);
+
+create table proposer(
+    idArticle tinyint unsigned,
+    idFournisseur tinyint unsigned,
+    dateProposer date,
+    quantiteProposer tinyint unsigned,
+    constraint fk_Article foreign key(idArticle) references article(idArticle),
+    constraint fk_Fournisseur foreign key(idFournisseur) references fournisseur(idFournisseur)
+);
+
+create table client(
+    idClient tinyint unsigned primary key auto_increment,
+    nomClient varchar(50),
+     adresseClient varchar(50),
+     telClient varchar(12),
+     emailClient varchar(50)
+
+);
+
+
+create table commande(
+     idCommande tinyint unsigned primary key auto_increment,
+     dateCommande date,
+     delaiCommande tinyint unsigned default 0,
+     quantiteCommande tinyint unsigned default 0,
+    idClient tinyint unsigned ,
+    constraint fk_Client foreign key(idClient) references client(idClient)
+);
+
+insert into categorie values
+(null,"Eléctronique"),
+(null,"Cosmetique"),
+(null,"Nourriture");
+ 
+ insert into article values
+ (null,"Ordinateur",10000,"ordinateur portable hp core i7",1),
+ (null,"Iphone",12000,"iphone xmax",1),
+ (null,"Telephone Samsung",12000,"telephone samsung A10",1),
+ (null,"Parfum",12000,"Parfum nivea black and white",2);
