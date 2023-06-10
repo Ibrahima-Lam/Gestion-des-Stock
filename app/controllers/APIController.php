@@ -23,10 +23,10 @@ class ApiController extends Controller
             $data =  $model->findOne($id);
         } elseif ($slug == "insert") {
             $res = $model->insert($id, $nom, $prix, $description, $categorie);
-            $data = $res ?  $model->findLastOne() : false;
+            $data = $res ?  $model->findLastOne() : ["res" => false];
         } elseif ($slug == "delete") {
             $res = $model->delete($id);
-            $data = $res ?  true : false;
+            $data = $res ? ["res" => true] : ["res" => false];
         }
 
         echo json_encode($data);
