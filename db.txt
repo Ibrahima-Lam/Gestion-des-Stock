@@ -1,4 +1,4 @@
-create database gestion stock;
+create database gestion;
 
 create table categorie (
     idCategorie tinyint unsigned primary key auto_increment,
