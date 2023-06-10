@@ -5,6 +5,13 @@ namespace App\Controllers;
 class Controller
 {
 
+    public function loadModel($class): mixed
+    {
+        $model = "App\Modele\\$class";
+        return new $model();
+    }
+
+
     public function render(string $view, array $data = []): void
     {
         extract($data);
