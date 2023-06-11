@@ -1,6 +1,7 @@
 
 create database gestion;
 
+use gestion;
 
 create table categorie (
     idCategorie tinyint unsigned primary key auto_increment,
