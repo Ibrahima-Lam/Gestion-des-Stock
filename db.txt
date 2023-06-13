@@ -56,8 +56,8 @@ create table contenir(
      idCommande tinyint unsigned ,
     idArticle tinyint unsigned ,
     quantite tinyint unsigned default 0,
-    constraint fk_Commande_c foreign key(idCommande) references commande(idCommande),
-    constraint fk_Article_c foreign key(idArticle) references article(idArticle)
+    constraint fk_Commande_c foreign key(idCommande) references commande(idCommande) on delete cascade,
+    constraint fk_Article_c foreign key(idArticle) references article(idArticle) on delete set null
 );
 
 insert into categorie values

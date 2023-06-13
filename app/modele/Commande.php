@@ -26,15 +26,15 @@ class Commande extends Modele
         return $res;
     }
 
-    public function insert($id, $date, $delai, $quantite, $client): bool
+    public function insert($id, $date, $delai, $client): bool
     {
-        $req = "insert into commande values('$id','$date','$delai','$quantite','$client')";
+        $req = "insert into commande values('$id','$date','$delai','$client')";
         return $this->exec($req);
     }
 
-    public function update($id, $date, $delai, $quantite, $client): bool
+    public function update($id, $date, $delai, $client): bool
     {
-        $req = "update commande set dateCommande='$date',delaiCommande='$delai',quantiteCommande='$quantite',idClient='$client' where idCommande='$id'";
+        $req = "update commande set dateCommande='$date',delaiCommande='$delai',idClient='$client' where idCommande='$id'";
         return $this->exec($req);
     }
 

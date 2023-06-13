@@ -9,6 +9,7 @@ class CommandeController extends Controller
     {
         $commandes = $this->loadModel("commande")->findAll();
         $clients = $this->loadModel("client")->findAll();
-        $this->render("commande", compact("commandes", "clients"));
+        $articles = $this->loadModel("article")->findAll();
+        $this->render("commande", compact("commandes", "clients", "articles"));
     }
 }

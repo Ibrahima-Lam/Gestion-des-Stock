@@ -97,10 +97,14 @@ $categories = $categories ?? [];
 
 
             <div class="form-group">
-                <label for="name">Catégorie :</label>
+                <label for="name">Article :</label>
                 <select name="commande" class="commande">
                     <?php foreach ($commandes as $commande) : ?>
-                        <option value="<?= $commande->idCommande ?>"><?= $commande->nomClient ?></option>
+                        <option value="<?= $commande->idCommande ?>">
+                            <?= $commande->dateCommande ?> /
+                            <?= $commande->nomClient ?>
+
+                        </option>
                     <?php endforeach ?>
                 </select>
             </div>

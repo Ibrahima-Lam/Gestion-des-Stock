@@ -107,10 +107,10 @@ class ApiController extends Controller
         if ($slug == "find") {
             $data = $id ? $model->findOne($id) : $model->findAll();
         } elseif ($slug == "edit") {
-            $res = $model->update($id, $date, $delai, $quantite, $client);
+            $res = $model->update($id, $date, $delai,  $client);
             $data =  $model->findOne($id);
         } elseif ($slug == "insert") {
-            $res = $model->insert($id, $date, $delai, $quantite, $client);
+            $res = $model->insert($id, $date, $delai,  $client);
             $data = $res ?  $model->findLastOne() : ["res" => false];
         } elseif ($slug == "delete") {
             $res = $model->delete($id);

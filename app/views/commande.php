@@ -4,6 +4,7 @@
 $title = "Commandes";
 $commandes = $commandes ?? [];
 $clients = $clients ?? [];
+$articles = $articles ?? [];
 
 ?>
 <div class="right-wrap">
@@ -150,13 +151,50 @@ $clients = $clients ?? [];
 
     </tr>
 </template>
+<dialog class='dialog' id="form2">
+    <h2 class="h">Formulaire des ventes</h2>
+    <div class="dialog-body">
+        <form action="" class="form" id="frm">
+
+            <input type="hidden" name="edit" class="edit">
+
+
+            <div class="form-group">
+                <label for="name">Catégorie :</label>
+                <select name="commande" class="commande">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantite">Quantité</label>
+                <input type="number" name="quantite" id="quantite" class="quantite" placeholder="Entrer la quantité">
+            </div>
+            <div class="form-group">
+                <label for="name">Article :</label>
+                <select name="article" class="article">
+                    <?php foreach ($articles as $article) : ?>
+                        <option value="<?= $article->idArticle ?>"><?= $article->nomArticle ?></option>
+                    <?php endforeach ?>
+                </select>
+                <div class="form-group">
+                    <button class="btn default" type="reset">Annuler</button>
+                    <button class="btn success" type="submit">Enrégistrer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="right"><button class="btn danger" id="ferme2">fermer</button></div>
+</dialog>
 <script>
     const add = document.getElementById('add');
     const close = document.getElementById('close');
     const ferme = document.getElementById('ferme');
+    const ferme2 = document.getElementById('ferme2');
     const dialog = document.getElementById('dialog');
     const liste = document.getElementById('liste');
     const form = document.getElementById('form');
+    const form2 = document.getElementById('form2');
+    const frm = document.getElementById('frm');
     const tbody = document.querySelector('tbody');
     let data = []
     let alldata = []
@@ -293,6 +331,9 @@ $clients = $clients ?? [];
     ferme.addEventListener('click', function(e) {
         liste.close()
     })
+    ferme2.addEventListener('click', function(e) {
+        form2.close()
+    })
 
 
     form.addEventListener('submit', async function(e) {
@@ -346,6 +387,37 @@ $clients = $clients ?? [];
         Actionlistener()
     })
 
+    frm.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        const {
+
+            article: {
+                value: article
+            },
+            quantite: {
+                value: quantite
+            },
+            commande: {
+                value: commande
+            }
+
+        } = this
+
+        let dt = {
+            edit: null,
+            idA: article,
+            idC: commande,
+            quantite: quantite,
+        }
+        dt = JSON.stringify(dt)
+
+        const url = `?p=api/vente/insert&data=${dt}`
+        await fetchData(url, getData)
+
+        form2.close()
+        if ((data.idCommande ?? null)) affiche(data.idCommande)
+    })
+
     function Actionlistener() {
         const deletes = document.querySelectorAll('.delete')
         deletes.forEach(elmt => {
@@ -354,11 +426,13 @@ $clients = $clients ?? [];
                 const id = this.parentNode.dataset.id
                 if (confirm("voulez supprimer cet élément")) {
                     await fetchData(`?p=api/commande/delete/${id}`, getData)
-                    const tr = this.parentNode.parentNode
-                    tr.classList.add("removed")
-                    setTimeout(() => {
-                        if (data.res ?? null) tr.remove()
-                    }, 500);
+                    if (data.res ?? null) {
+                        const tr = this.parentNode.parentNode
+                        tr.classList.add("removed")
+                        setTimeout(() => {
+                            tr.remove()
+                        }, 500);
+                    }
                 }
             })
         });
@@ -391,32 +465,56 @@ $clients = $clients ?? [];
             })
         });
 
+        const adds = tbody.querySelectorAll('.add')
+        adds.forEach(add => {
+            add.addEventListener('click', async function(e) {
+                e.stopImmediatePropagation()
+                const select = form2.querySelector(".commande")
+                const option = select.querySelector("option")
+                const id = this.parentNode.dataset.id
+                if (alldata.length === 0) await fetchData("?p=api/commande/find", getAllData)
+                const data = alldata.filter(elmt => {
+                    return elmt.idCommande == id
+                })
+                const {
+                    dateCommande,
+                    nomClient
+                } = data[0]
+                option.value = id
+                option.innerText = `${dateCommande} / ${nomClient}`
+                form2.showModal()
+            })
+        });
+
         const listes = tbody.querySelectorAll('.liste')
         listes.forEach(element => {
             element.addEventListener('click', async function(e) {
                 e.stopImmediatePropagation()
                 const id = this.parentNode.dataset.id
-                await fetchData(`?p=api/vente/match/${id}`, getData)
-
-                const tb = liste.querySelector("tbody")
-                const p = liste.querySelector("p")
-                tb.innerHTML = ""
-                p.innerHTML = ""
-                let total = 0
-                if (data.length !== 0 && (data.res ?? true)) {
-                    data.forEach(element => {
-                        const tr = constructListRow(element)
-                        tb.append(tr)
-                    });
-                    total = data.reduce((a, b) => {
-                        return a + (+b.prix_vente) * b.quantite
-                    }, 0)
-                    liste.querySelector(".totaux").innerText = total
-                } else p.innerText = "Pas d'article dans cette commande"
-                liste.showModal()
+                affiche(id)
             })
         });
     }
 
+    async function affiche(id) {
+        await fetchData(`?p=api/vente/match/${id}`, getData)
+
+        const tb = liste.querySelector("tbody")
+        const p = liste.querySelector("p")
+        tb.innerHTML = ""
+        p.innerHTML = ""
+        let total = 0
+        if (data.length !== 0 && (data.res ?? true)) {
+            data.forEach(element => {
+                const tr = constructListRow(element)
+                tb.append(tr)
+            });
+            total = data.reduce((a, b) => {
+                return a + (+b.prix_vente) * b.quantite
+            }, 0)
+            liste.querySelector(".totaux").innerText = total
+        } else p.innerText = "Pas d'article dans cette commande"
+        liste.showModal()
+    }
     Actionlistener()
 </script>
