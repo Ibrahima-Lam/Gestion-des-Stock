@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Controllers;
-    
+
 class ClientController extends Controller
 {
-    
+
     public function index(): void
     {
-    $this->render("client");
+        $clients = $this->loadModel("client")->findAll();
+        $this->render("client", compact("clients"));
     }
 }

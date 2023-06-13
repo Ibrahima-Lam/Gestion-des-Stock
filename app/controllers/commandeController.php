@@ -7,6 +7,8 @@ class CommandeController extends Controller
 
     public function index(): void
     {
-        $this->render("commande");
+        $commandes = $this->loadModel("commande")->findAll();
+        $clients = $this->loadModel("client")->findAll();
+        $this->render("commande", compact("commandes", "clients"));
     }
 }

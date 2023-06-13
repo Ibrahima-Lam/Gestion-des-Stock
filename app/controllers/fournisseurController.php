@@ -7,6 +7,7 @@ class FournisseurController extends Controller
 
     public function index(): void
     {
-        $this->render("fournisseur");
+        $fournisseurs = $this->loadModel("fournisseur")->findAll();
+        $this->render("fournisseur", compact("fournisseurs"));
     }
 }

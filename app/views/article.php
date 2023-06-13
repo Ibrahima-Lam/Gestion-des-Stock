@@ -8,8 +8,14 @@ $categories = $categories ?? [];
 <div class="right-wrap">
     <input type="search" name="search" id="search" class="search" placeholder="Recherche...">
     <div class="row sort">
-        asc: <input type="radio" value="asc" class="trie" name="trie" checked>
-        desc: <input type="radio" value="desc" class="trie" name="trie">
+        <div class="flex-evenly">
+            <label for="asc">&#8681;: </label>
+            <input type="radio" id="asc" value="asc" class="trie" name="trie" checked>
+        </div>
+        <div class="flex-evenly">
+            <label for="desc">&#8679;: </label>
+            <input type="radio" id="desc" value="desc" class="trie" name="trie">
+        </div>
     </div>
     <div class="row sort">
         Trie :
@@ -108,7 +114,6 @@ $categories = $categories ?? [];
     <div class="right"><button class="btn danger" id="close">fermer</button></div>
 </dialog>
 <script>
-    const search = document.getElementById('search');
     const add = document.getElementById('add');
     const close = document.getElementById('close');
     const dialog = document.getElementById('dialog');
@@ -160,6 +165,7 @@ $categories = $categories ?? [];
         })
     });
 
+    const search = document.getElementById('search');
     search.addEventListener('input', async function(e) {
         paramettre.val = this.value
         await changeTbody()

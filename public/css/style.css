@@ -10,6 +10,7 @@
     padding: 5px;
     background-color: rgb(232, 241, 247);
     text-align: center;
+
 }
 
 .h {
@@ -89,6 +90,13 @@
     justify-content: right;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.flex-evenly {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 5px;
 }
 
 .col {
@@ -182,14 +190,32 @@
 
 .dialog {
     padding: 5px 10px;
-    min-height: 15vh;
-    min-width: 25%;
+    min-height: 200px;
+    min-width: 300px;
+    overflow-x: visible;
     background-color: ghostwhite;
+    border-color: lightskyblue;
+    box-shadow: 1px 1px 2px 2px lightskyblue;
     position: absolute;
     left: 40%;
     right: 40vh;
 }
 
+.dialog-body {
+    height: 90%;
+    overflow-x: visible;
+    overflow-y: auto;
+}
+
+.dialog dd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
+
+}
 
 .right {
     display: flex;
@@ -204,6 +230,7 @@
     font-weight: 500;
     border-radius: 4px;
     border: none;
+    cursor: pointer;
 
 }
 
@@ -265,6 +292,7 @@ td.action {
 
 .sort {
     min-width: 150px;
+    justify-content: space-evenly;
 }
 
 .sort select {
@@ -274,6 +302,12 @@ td.action {
     padding: 5px;
     font-size: 16px;
     font-weight: 500;
+}
+
+.sort label {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 5px;
 }
 
 .removed {

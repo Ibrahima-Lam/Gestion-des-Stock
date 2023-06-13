@@ -19,9 +19,9 @@ create table article(
 
 create table fournisseur (
     idFournisseur tinyint unsigned primary key auto_increment,
-     nomFounisseur varchar(50),
-     adresseFounisseur varchar(50),
-     telFounisseur varchar(12)
+     nomFournisseur varchar(50),
+     adresseFournisseur varchar(50),
+     telFournisseur varchar(12)
 
 );
 
@@ -48,9 +48,16 @@ create table commande(
      idCommande tinyint unsigned primary key auto_increment,
      dateCommande date,
      delaiCommande tinyint unsigned default 0,
-     quantiteCommande tinyint unsigned default 0,
     idClient tinyint unsigned ,
     constraint fk_Client foreign key(idClient) references client(idClient)
+);
+
+create table contenir(
+     idCommande tinyint unsigned ,
+    idArticle tinyint unsigned ,
+    quantite tinyint unsigned default 0,
+    constraint fk_Commande_c foreign key(idCommande) references commande(idCommande),
+    constraint fk_Article_c foreign key(idArticle) references article(idArticle)
 );
 
 insert into categorie values
