@@ -437,6 +437,7 @@ $categories = $categories ?? [];
                 produit.querySelector(".nomcategorie").innerText = nomCategorie
                 produit.querySelector(".idcommande").innerText = idCommande
                 produit.querySelector(".delaicommande").innerText = delaiCommande
+                produit.querySelector(".datecommande").innerText = dateCommande
                 produit.querySelector(".quantite").innerText = quantite
                 produit.querySelector(".idclient").innerText = idClient
                 produit.querySelector(".nomclient").innerText = nomClient
