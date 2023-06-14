@@ -202,13 +202,10 @@ $categories = $categories ?? [];
                 elmt.description.toUpperCase().includes(val.toUpperCase()) ||
                 elmt.nomCategorie.toUpperCase().includes(val.toUpperCase())
         })
-        elements = elements.map(element => {
-            element.prix_vente = +element.prix_vente
-            return element
-        })
-
+        
         elements = elements.sort((a, b) => {
-            const t = a[triant] < b[triant] ? -1 : 1
+            let t = a[triant] < b[triant] ? -1 : 1
+            if(typeof a==="string" && typeof b==="string") t=a[triant].toUpperCase() < b[triant].toUpperCase() ? -1 : 1
             return trie === "asc" ? t : -t
         })
 
