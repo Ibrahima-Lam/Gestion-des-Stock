@@ -1,4 +1,7 @@
-create database gestion stock;
+
+create database gestion;
+
+use gestion;
 
 create table categorie (
     idCategorie tinyint unsigned primary key auto_increment,
@@ -16,9 +19,9 @@ create table article(
 
 create table fournisseur (
     idFournisseur tinyint unsigned primary key auto_increment,
-     nomFounisseur varchar(50),
-     adresseFounisseur varchar(50),
-     telFounisseur varchar(12)
+     nomFournisseur varchar(50),
+     adresseFournisseur varchar(50),
+     telFournisseur varchar(12)
 
 );
 
@@ -45,9 +48,16 @@ create table commande(
      idCommande tinyint unsigned primary key auto_increment,
      dateCommande date,
      delaiCommande tinyint unsigned default 0,
-     quantiteCommande tinyint unsigned default 0,
     idClient tinyint unsigned ,
-    constraint fk_Client foreign key(idClient) references client(idClient)
+    constraint fk_Client foreign key(idClient) references client(idClient) on delete cascade;
+);
+
+create table contenir(
+     idCommande tinyint unsigned ,
+    idArticle tinyint unsigned ,
+    quantite tinyint unsigned default 0,
+    constraint fk_Commande_c foreign key(idCommande) references commande(idCommande) on delete cascade,
+    constraint fk_Article_c foreign key(idArticle) references article(idArticle) on delete cascade
 );
 
 insert into categorie values

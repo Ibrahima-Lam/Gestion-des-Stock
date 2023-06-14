@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Controllers;
-    
-class BaseController extends Controller
+
+class AppController extends Controller
 {
-    
+
     public function index(): void
     {
-    $this->render("texte");
+        $this->render("home");
     }
 }

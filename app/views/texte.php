@@ -1,1 +1,0 @@
-<h1>Salut les amis!</h1>
