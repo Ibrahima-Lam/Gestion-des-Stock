@@ -133,6 +133,9 @@ $fournisseurs = $fournisseurs ?? [];
         tr.querySelector(".nom").innerText = nomFournisseur
         tr.querySelector(".adresse").innerText = adresseFournisseur
         tr.querySelector(".tel").innerText = telFournisseur
+        tr.querySelector(".action").dataset.id = idFournisseur
+
+
         return tr
     }
 

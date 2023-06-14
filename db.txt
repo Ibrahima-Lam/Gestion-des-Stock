@@ -49,7 +49,7 @@ create table commande(
      dateCommande date,
      delaiCommande tinyint unsigned default 0,
     idClient tinyint unsigned ,
-    constraint fk_Client foreign key(idClient) references client(idClient) on delete cascade;
+    constraint fk_Client foreign key(idClient) references client(idClient) on delete cascade
 );
 
 create table contenir(
