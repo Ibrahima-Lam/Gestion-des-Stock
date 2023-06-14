@@ -14,5 +14,5 @@ unset($args[0]);
 unset($args[1]);
 $instance = new $controller;
 if (method_exists($instance, $methode)) call_user_func_array([$instance, $methode], $args ?? []);
-elseif (strtoupper($class) === "API") "{res:error}";
+elseif (strtoupper($class) === "API") echo "{res:error}";
 else echo "error 404";
