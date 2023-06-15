@@ -325,7 +325,7 @@ td.action {
 
 .box {
     display: block;
-    margin: 10px;
+    margin: 10px 5%;
     border-radius: 4px;
     box-shadow: 1px 1px 2px 2px lightskyblue;
     font-size: 16px;

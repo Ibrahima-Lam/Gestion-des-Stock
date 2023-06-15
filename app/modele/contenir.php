@@ -47,7 +47,7 @@ class Contenir extends Modele
     public function findCountAll(): false|array
     {
         $req = self::QUERY_COUNT;
-        $req .= " group by idClient , idCommande";
+        $req .= " group by idClient ";
         $res = $this->select($req, self::class);
         return $res;
     }
@@ -55,6 +55,13 @@ class Contenir extends Modele
     {
         $req = self::QUERY_ARTICLE;
         $req .= " group by idArticle ";
+        $res = $this->select($req, self::class);
+        return $res;
+    }
+    public function findCommandeCountAll(): false|array
+    {
+        $req = self::QUERY_COUNT;
+        $req .= " group by idCommande";
         $res = $this->select($req, self::class);
         return $res;
     }

@@ -3,15 +3,15 @@
 $title = "Statistiques";
 $statistiques = $statistiques ?? [];
 $articles = $articles ?? [];
+$commandes = $commandes ?? [];
 
 ?>
 <br>
-<h2 class="h">Les Clients et Les Commandes</h2>
+<h2 class="h">Les Clients </h2>
 <table class="table striped">
     <thead>
         <th>Client</th>
         <th>Adresse</th>
-        <th>Date de Commande</th>
         <th>Nombre d'article</th>
         <th>Nombre Total d'article</th>
         <th>Prix Total</th>
@@ -21,10 +21,35 @@ $articles = $articles ?? [];
             <tr>
                 <td><?= $stat->nomClient ?></td>
                 <td><?= $stat->adresseClient ?></td>
-                <td><?= $stat->dateCommande ?></td>
                 <td><?= $stat->nombre ?></td>
                 <td><?= $stat->total ?></td>
                 <td><?= $stat->prix ?></td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<br>
+<h2 class="h">Les Commandes</h2>
+<table class="table striped">
+    <thead>
+        <th>Numero Commande</th>
+        <th>Date de Commande</th>
+        <th>Client</th>
+        <th>Adresse</th>
+        <th>Nombre d'article</th>
+        <th>Nombre Total d'article</th>
+        <th>Prix Total</th>
+    </thead>
+    <tbody>
+        <?php foreach ($commandes as $commande) : ?>
+            <tr>
+                <td><?= $commande->idCommande ?></td>
+                <td><?= $commande->dateCommande ?></td>
+                <td><?= $commande->nomClient ?></td>
+                <td><?= $commande->adresseClient ?></td>
+                <td><?= $commande->nombre ?></td>
+                <td><?= $commande->total ?></td>
+                <td><?= $commande->prix ?></td>
             </tr>
         <?php endforeach ?>
     </tbody>

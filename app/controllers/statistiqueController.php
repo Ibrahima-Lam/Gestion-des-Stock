@@ -9,6 +9,7 @@ class StatistiqueController extends Controller
     {
         $statistiques = $this->loadModel("contenir")->findCountAll();
         $articles = $this->loadModel("contenir")->findArticleCountAll();
-        $this->render("statistique", compact("statistiques", "articles"));
+        $commandes = $this->loadModel("contenir")->findCommandeCountAll();
+        $this->render("statistique", compact("statistiques", "articles", "commandes"));
     }
 }
