@@ -69,6 +69,19 @@
 
 
     <div class="box">
+        <div class="head"><a href="?p=client">Client</a></div>
+        <div class="body">
+            <p class="h">
+                La page des client disponibles,
+                on peut effectuer des ajout, des suppréssion et des modification
+                à partir de la page.
+
+            </p>
+
+        </div>
+    </div>
+
+    <div class="box">
         <div class="head"><a href="?p=stock">Stock</a></div>
         <div class="body">
             <p class="h">
@@ -80,4 +93,5 @@
 
         </div>
     </div>
+
 </div>

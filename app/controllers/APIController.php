@@ -143,4 +143,28 @@ class ApiController extends Controller
         if (!$data) $data = ["res" => false];
         echo json_encode($data);
     }
+
+    public function stock(string $slug,  $id = null): void
+    {
+        $model = $this->loadModel("proposer");
+        $dt = $_GET["data"] ?? "[]";
+        $dt = json_decode($dt, true);
+        extract($dt ?? []);
+        if ($slug == "find") {
+            $data =  $model->findAll();
+        } elseif ($slug == "match") {
+            $data =  $model->findAllByid($id);
+        } elseif ($slug == "edit") {
+            $res = $model->update($idA, $idF, $quantite, $date);
+            $data =  $model->findOne($idA, $idF);
+        } elseif ($slug == "insert") {
+            $res = $model->insert($idA, $idF, $quantite, $date);
+            $data = $res ?  $model->findLastOne() : ["res" => false];
+        } elseif ($slug == "delete") {
+            $res = $model->delete($idA, $idF);
+            $data = $res ? ["res" => true] : ["res" => false];
+        }
+        if (!$data) $data = ["res" => false];
+        echo json_encode($data);
+    }
 }

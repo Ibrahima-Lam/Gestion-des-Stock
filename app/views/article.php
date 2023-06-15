@@ -202,10 +202,10 @@ $categories = $categories ?? [];
                 elmt.description.toUpperCase().includes(val.toUpperCase()) ||
                 elmt.nomCategorie.toUpperCase().includes(val.toUpperCase())
         })
-        
+
         elements = elements.sort((a, b) => {
             let t = a[triant] < b[triant] ? -1 : 1
-            if(typeof a==="string" && typeof b==="string") t=a[triant].toUpperCase() < b[triant].toUpperCase() ? -1 : 1
+            if (typeof a === "string" && typeof b === "string") t = a[triant].toUpperCase() < b[triant].toUpperCase() ? -1 : 1
             return trie === "asc" ? t : -t
         })
 
@@ -213,7 +213,7 @@ $categories = $categories ?? [];
             const tr = constructRow(element)
             tbody.append(tr)
         });
-
+        await fetchData("?p=api/article/find", getAllData)
         Actionlistener()
 
     }
