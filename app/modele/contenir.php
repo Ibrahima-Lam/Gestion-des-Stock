@@ -5,6 +5,12 @@ namespace App\Modele;
 class Contenir extends Modele
 {
     const QUERY = "select * from contenir natural join article natural join categorie natural join client natural join commande ";
+    const QUERY_COUNT = "select idClient,nomClient,adresseClient,idCommande ,dateCommande,
+    sum( prix_vente * quantite) as prix,sum(  quantite) as total, count(idArticle) as nombre
+     from contenir natural join article natural join categorie natural join client natural join commande ";
+    const QUERY_ARTICLE = "select idArticle,nomArticle,description,idCategorie,nomCategorie,
+    sum( prix_vente * quantite) as prix,sum(  quantite) as total, count(idCommande) as nombre
+     from contenir natural join article natural join categorie natural join client natural join commande ";
 
     public $idArticle;
     public $nomArticle;
@@ -21,6 +27,10 @@ class Contenir extends Modele
     public $adresseClient;
     public $telClient;
     public $emailClient;
+    public $prix;
+    public $nombre;
+    public $total;
+
 
     public function findAll(): false|array
     {
@@ -31,6 +41,20 @@ class Contenir extends Modele
     {
         $req = self::QUERY;
         $req .= " where idCommande='$id'";
+        $res = $this->select($req, self::class);
+        return $res;
+    }
+    public function findCountAll(): false|array
+    {
+        $req = self::QUERY_COUNT;
+        $req .= " group by idClient , idCommande";
+        $res = $this->select($req, self::class);
+        return $res;
+    }
+    public function findArticleCountAll(): false|array
+    {
+        $req = self::QUERY_ARTICLE;
+        $req .= " group by idArticle ";
         $res = $this->select($req, self::class);
         return $res;
     }

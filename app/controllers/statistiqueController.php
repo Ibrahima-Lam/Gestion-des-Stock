@@ -7,6 +7,8 @@ class StatistiqueController extends Controller
 
     public function index(): void
     {
-        $this->render("statistique");
+        $statistiques = $this->loadModel("contenir")->findCountAll();
+        $articles = $this->loadModel("contenir")->findArticleCountAll();
+        $this->render("statistique", compact("statistiques", "articles"));
     }
 }

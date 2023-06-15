@@ -110,7 +110,7 @@ CREATE TABLE `commande` (
   PRIMARY KEY (`idCommande`),
   KEY `fk_Client` (`idClient`),
   CONSTRAINT `fk_Client` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `commande` (
 
 LOCK TABLES `commande` WRITE;
 /*!40000 ALTER TABLE `commande` DISABLE KEYS */;
-INSERT INTO `commande` VALUES (1,'2023-06-12',3,1),(2,'2023-06-11',4,2);
+INSERT INTO `commande` VALUES (1,'2023-06-12',3,1),(2,'2023-06-11',4,2),(7,'2023-06-12',3,3);
 /*!40000 ALTER TABLE `commande` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,7 @@ CREATE TABLE `contenir` (
   `quantite` tinyint(3) unsigned DEFAULT 0,
   KEY `fk_Commande_c` (`idCommande`),
   KEY `fk_Article_c` (`idArticle`),
-  CONSTRAINT `fk_Article_c` FOREIGN KEY (`idArticle`) REFERENCES `article` (`idArticle`) ON DELETE SET NULL,
+  CONSTRAINT `fk_Article_c` FOREIGN KEY (`idArticle`) REFERENCES `article` (`idArticle`) ON DELETE CASCADE,
   CONSTRAINT `fk_Commande_c` FOREIGN KEY (`idCommande`) REFERENCES `commande` (`idCommande`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -147,7 +147,7 @@ CREATE TABLE `contenir` (
 
 LOCK TABLES `contenir` WRITE;
 /*!40000 ALTER TABLE `contenir` DISABLE KEYS */;
-INSERT INTO `contenir` VALUES (1,1,10),(1,16,2),(1,16,2),(2,1,2),(2,16,4);
+INSERT INTO `contenir` VALUES (1,1,10),(1,16,2),(1,16,2),(2,1,2),(2,16,4),(7,15,1),(7,16,1),(7,17,1);
 /*!40000 ALTER TABLE `contenir` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +173,7 @@ CREATE TABLE `fournisseur` (
 
 LOCK TABLES `fournisseur` WRITE;
 /*!40000 ALTER TABLE `fournisseur` DISABLE KEYS */;
-INSERT INTO `fournisseur` VALUES (1,'ibrahima lam','Kouva, NKTT','41916418'),(2,'Ciré Lam','kossovo, NkTT','483535336'),(3,'Amadou Dia','jeddida ; Kiffa','26666506');
+INSERT INTO `fournisseur` VALUES (1,'ibrahima lam','Kouva, NKTT','41916418'),(2,'Ciré Lam','kossovo, NkTT','483535336');
 /*!40000 ALTER TABLE `fournisseur` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,6 +202,7 @@ CREATE TABLE `proposer` (
 
 LOCK TABLES `proposer` WRITE;
 /*!40000 ALTER TABLE `proposer` DISABLE KEYS */;
+INSERT INTO `proposer` VALUES (16,1,'0000-00-00',6),(18,1,'0000-00-00',1),(21,1,'0000-00-00',5),(16,2,'2023-06-15',1);
 /*!40000 ALTER TABLE `proposer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -214,4 +215,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-13 13:45:00
+-- Dump completed on 2023-06-15 10:44:17
