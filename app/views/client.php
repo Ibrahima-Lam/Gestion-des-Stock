@@ -137,8 +137,8 @@ $articles = $articles ?? [];
         <td class="delai"></td>
         <td class="client"></td>
         <td class="action">
-            <button class="btn add" title="Ajouter un article à cette commande"><img src="icons/plus.svg"></button>
-            <button class="btn liste" title="liste des article pour cette commande"><img src="icons/list-task.svg"></button>
+            <!--             <button class="btn add" title="Ajouter un article à cette commande"><img src="icons/plus.svg"></button>
+ --> <button class="btn liste" title="liste des article pour cette commande"><img src="icons/list-task.svg"></button>
 
         </td>
     </tr>
