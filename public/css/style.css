@@ -202,9 +202,14 @@
 }
 
 .dialog-body {
+    width: 100%;
     height: 90%;
-    overflow-x: visible;
+    overflow-x: auto;
     overflow-y: auto;
+}
+
+.dialog .table {
+    width: 95%;
 }
 
 .dialog dd {
@@ -295,7 +300,8 @@ td.action {
     justify-content: space-evenly;
 }
 
-.sort select {
+.sort select,
+.sort .field {
     border-radius: 4px;
     border: none;
     border-bottom: 1px solid lightskyblue;
@@ -310,7 +316,8 @@ td.action {
     padding: 5px;
 }
 
-.removed {
+tr.removed,
+tbody tr.removed:nth-child(odd) {
     background-color: red;
 }
 

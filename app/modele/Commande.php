@@ -15,6 +15,11 @@ class Commande extends Modele
         $res = $this->select("select * from commande natural join client ", self::class);
         return $res;
     }
+    public function findAllById($id): false|array
+    {
+        $res = $this->select("select * from commande natural join client where idClient='$id' ", self::class);
+        return $res;
+    }
     public function findOne($id): false|self
     {
         $res = $this->select("select * from commande natural join client where idCommande='$id'", self::class, true);

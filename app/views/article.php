@@ -220,10 +220,7 @@ $categories = $categories ?? [];
 
     add.addEventListener('click', function(e) {
         form.querySelector(".edit").value = null
-        form.querySelector(".id").value = null
-        form.querySelector(".nom").value = null
-        form.querySelector(".prix").value = null
-        form.querySelector(".description").value = null
+        form.reset()
         dialog.showModal()
     })
 
@@ -327,7 +324,10 @@ $categories = $categories ?? [];
                 const select = form.querySelector(".categorie")
                 const options = select.querySelectorAll('option')
                 options.forEach(option => {
-                    if (option.value == idCategorie) option.selected = true
+                    if (option.value == idCategorie) {
+                        option.selected = true
+                        return
+                    }
                 });
                 dialog.showModal()
             })

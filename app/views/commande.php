@@ -85,7 +85,7 @@ $articles = $articles ?? [];
 </template>
 
 <dialog class='dialog' id="dialog">
-    <h2 class="h">Formulaire des articles</h2>
+    <h2 class="h">Formulaire des Commandes</h2>
     <div class="dialog-body">
         <form action="" class="form" id="form">
             <input type="hidden" name="id" class="id">
@@ -305,7 +305,7 @@ $articles = $articles ?? [];
 
         elements = elements.sort((a, b) => {
             let t = a[triant] < b[triant] ? -1 : 1
-            if(typeof a==="string" && typeof b==="string") t=a[triant].toUpperCase() < b[triant].toUpperCase() ? -1 : 1
+            if (typeof a === "string" && typeof b === "string") t = a[triant].toUpperCase() < b[triant].toUpperCase() ? -1 : 1
             return trie === "asc" ? t : -t
         })
 

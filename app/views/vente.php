@@ -34,14 +34,9 @@ $categories = $categories ?? [];
     </div>
     <div class="row sort">
         Filtre :
-        <select id="filtre" class="categorie">
-            <option value="">Tout</option>
-            <?php foreach ($categories as $categorie) : ?>
-                <option value="<?= $categorie->idCategorie ?>"><?= $categorie->nomCategorie ?></option>
-            <?php endforeach ?>
-        </select>
+        <input type="date" name="filtre" id="filtre" class="field">
     </div>
-    <button id="add" class="btn infos shadow"> Ajouter un Article</button>
+    <button id="add" class="btn infos shadow"> Ajouter une vente</button>
 </div>
 <table class="table strip">
     <thead>
@@ -72,7 +67,8 @@ $categories = $categories ?? [];
         <?php endforeach ?>
     </tbody>
 </table>
-
+<br>
+<strong id="totaux" class="h"></strong>
 <template id="row">
     <tr>
         <td class="article"></td>
@@ -97,7 +93,7 @@ $categories = $categories ?? [];
 
 
             <div class="form-group">
-                <label for="name">Article :</label>
+                <label for="name">Commande :</label>
                 <select name="commande" class="commande">
                     <?php foreach ($commandes as $commande) : ?>
                         <option value="<?= $commande->idCommande ?>">
@@ -113,7 +109,7 @@ $categories = $categories ?? [];
                 <input type="number" name="quantite" id="quantite" class="quantite" placeholder="Entrer la quantité">
             </div>
             <div class="form-group">
-                <label for="name">Catégorie :</label>
+                <label for="name">Article :</label>
                 <select name="article" class="article">
                     <?php foreach ($articles as $article) : ?>
                         <option value="<?= $article->idArticle ?>"><?= $article->nomArticle ?></option>
@@ -239,9 +235,10 @@ $categories = $categories ?? [];
         if (alldata.length === 0) await fetchData("?p=api/vente/find", getAllData)
         let elements = alldata
 
-        /* if (filtre) elements = elements.filter(element => {
-            return element.idCategorie == filtre
-        }) */
+        if (filtre) elements = elements.filter(element => {
+            return element.dateCommande == filtre
+        })
+
 
         if (val) elements = elements.filter(elmt => {
             return elmt.nomArticle.toUpperCase().includes(val.toUpperCase()) ||
@@ -255,6 +252,15 @@ $categories = $categories ?? [];
             if (typeof a === "string" && typeof b === "string") t = a[triant].toUpperCase() < b[triant].toUpperCase() ? -1 : 1
             return trie === "asc" ? t : -t
         })
+
+        const totaux = document.getElementById('totaux');
+        if (filtre) {
+            let total = 0
+            total = elements.reduce((a, b) => {
+                return a + b.prix_vente * b.quantite
+            }, 0)
+            totaux.innerHTML = ` Total: ${total}`
+        } else totaux.innerHTML = ""
 
         elements.forEach(element => {
             const tr = constructRow(element)

@@ -106,6 +106,8 @@ class ApiController extends Controller
         extract($dt ?? []);
         if ($slug == "find") {
             $data = $id ? $model->findOne($id) : $model->findAll();
+        } elseif ($slug == "match") {
+            $data =  $model->findAllByid($id);
         } elseif ($slug == "edit") {
             $res = $model->update($id, $date, $delai,  $client);
             $data =  $model->findOne($id);
