@@ -235,6 +235,12 @@ $articles = $articles ?? [];
 
     }
 
+    const bc = new BroadcastChannel("client")
+    bc.onmessage = async function(e) {
+        await fetchData("?p=api/client/find", getAllData)
+        await changeTbody()
+    }
+
     function getData(val) {
         data = val
     }
@@ -311,7 +317,7 @@ $articles = $articles ?? [];
             const tr = constructRow(element)
             tbody.append(tr)
         });
-
+        await fetchData("?p=api/client/find", getAllData)
         Actionlistener()
 
     }
@@ -393,7 +399,7 @@ $articles = $articles ?? [];
         } else {
             tbody.append(tr)
         }
-
+        bc.postMessage("submit")
         await fetchData("?p=api/client/find", getAllData)
         Actionlistener()
     })
@@ -447,6 +453,7 @@ $articles = $articles ?? [];
                     setTimeout(() => {
                         if (data.res ?? null) tr.remove()
                     }, 500);
+                    bc.postMessage("delete")
                 }
             })
         });
@@ -511,7 +518,10 @@ $articles = $articles ?? [];
         await fetchData(url, getData)
         const tbodylist = liste.querySelector("tbody")
         tbodylist.innerHTML = ""
-
+        if (data.length === 0 || !(data.res ?? true)) {
+            alert("Pas de Commande disponible pour ce Client!")
+            return
+        }
         data.forEach(element => {
             const listeRow = document.getElementById('liste-row').content.cloneNode(true);
             const {

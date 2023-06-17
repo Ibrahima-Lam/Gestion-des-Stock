@@ -28,6 +28,7 @@ $articles = $articles ?? [];
             <option value="idClient">Client</option>
         </select>
     </div>
+
     <div class="row sort">
         Filtre :
         <select id="filtre" class="client">
@@ -37,6 +38,12 @@ $articles = $articles ?? [];
             <?php endforeach ?>
         </select>
     </div>
+
+    <div class="row sort">
+        Date :
+        <input type="date" name="filtredate" id="filtredate" class="field">
+    </div>
+
     <button id="add" class="btn infos shadow"> Ajouter une Commande</button>
 </div>
 <table class="table strip">
@@ -203,7 +210,8 @@ $articles = $articles ?? [];
         trie: "asc",
         triant: "idCommande",
         val: null,
-        filtre: null
+        filtre: null,
+        filtredate: null
     }
 
     function getData(val) {
@@ -212,6 +220,12 @@ $articles = $articles ?? [];
 
     function getAllData(val) {
         alldata = val
+    }
+
+    const bc = new BroadcastChannel("commande")
+    bc.onmessage = async function(e) {
+        await fetchData("?p=api/commande/find", getAllData)
+        await changeTbody()
     }
 
     function constructRow(data) {
@@ -224,10 +238,10 @@ $articles = $articles ?? [];
             idClient,
             nomClient
         } = data
-        tr.querySelector(".id").innerText = idCommande
-        tr.querySelector(".date").innerText = dateCommande
-        tr.querySelector(".delai").innerText = delaiCommande
-        tr.querySelector(".client").innerText = nomClient
+        tr.querySelector(".id").innerHTML = idCommande
+        tr.querySelector(".date").innerHTML = dateCommande
+        tr.querySelector(".delai").innerHTML = delaiCommande
+        tr.querySelector(".client").innerHTML = nomClient
         tr.querySelector(".action").dataset.id = idCommande
         return tr
     }
@@ -267,6 +281,7 @@ $articles = $articles ?? [];
 
     const search = document.getElementById('search');
     search.addEventListener('input', async function(e) {
+        e.stopImmediatePropagation()
         paramettre.val = this.value
         await changeTbody()
     })
@@ -276,24 +291,38 @@ $articles = $articles ?? [];
         paramettre.triant = this.value
         await changeTbody()
     })
+
     const filtre = document.getElementById('filtre');
     filtre.addEventListener('change', async function(e) {
         paramettre.filtre = this.value
         await changeTbody()
     })
+
+    const filtredate = document.getElementById('filtredate');
+    filtredate.addEventListener('change', async function(e) {
+        paramettre.filtredate = this.value
+        await changeTbody()
+    })
+
     async function changeTbody() {
         tbody.innerHTML = ""
         const {
             trie,
             triant,
             val,
-            filtre
+            filtre,
+            filtredate
         } = paramettre
         if (alldata.length === 0) await fetchData("?p=api/commande/find", getAllData)
         let elements = alldata
 
+
         if (filtre) elements = elements.filter(element => {
             return element.idClient == filtre
+        })
+
+        if (filtredate) elements = elements.filter(element => {
+            return element.dateCommande == filtredate
         })
 
         if (val) elements = elements.filter(elmt => {
@@ -301,6 +330,8 @@ $articles = $articles ?? [];
                 elmt.dateCommande.toUpperCase().includes(val.toUpperCase()) ||
                 elmt.nomClient.toUpperCase().includes(val.toUpperCase())
         })
+
+
 
 
         elements = elements.sort((a, b) => {
@@ -383,7 +414,7 @@ $articles = $articles ?? [];
         } else {
             tbody.append(tr)
         }
-
+        bc.postMessage("submit")
         await fetchData("?p=api/commande/find", getAllData)
         Actionlistener()
     })
@@ -433,6 +464,7 @@ $articles = $articles ?? [];
                         setTimeout(() => {
                             tr.remove()
                         }, 500);
+                        bc.postMessage("delete")
                     }
                 }
             })
@@ -502,8 +534,10 @@ $articles = $articles ?? [];
 
         const tb = liste.querySelector("tbody")
         const p = liste.querySelector("p")
+        const totaux = liste.querySelector(".totaux")
         tb.innerHTML = ""
         p.innerHTML = ""
+        totaux.innerHTML = ""
         let total = 0
         if (data.length !== 0 && (data.res ?? true)) {
             data.forEach(element => {
@@ -513,9 +547,9 @@ $articles = $articles ?? [];
             total = data.reduce((a, b) => {
                 return a + (+b.prix_vente) * b.quantite
             }, 0)
-            liste.querySelector(".totaux").innerText = total
-        } else p.innerText = "Pas d'article dans cette commande"
-        liste.showModal()
+            totaux.innerText = total
+            liste.showModal()
+        } else alert("Pas d'article dans cette commande")
     }
     Actionlistener()
 </script>
